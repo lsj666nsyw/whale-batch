@@ -116,10 +116,28 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 .promo{background:linear-gradient(135deg,#eef5ff,#f3efff);border:1px solid #d9e6ff;border-radius:var(--r);
   padding:14px 16px;margin-bottom:14px;font-size:13px;color:var(--ink2)}
 .promo b{color:var(--ink)}
+/* 跨站导流 */
+.crossnav{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 14px;margin-bottom:14px;
+}
+.cn-lab{font-size:12px;color:var(--ink3);font-weight:600;flex:none}
+.cn-item{
+  display:inline-flex;align-items:center;gap:5px;text-decoration:none;
+  font-size:12.5px;color:var(--ink2);background:#f4f7fc;border:1px solid #e3e8f0;
+  border-radius:999px;padding:5px 12px;font-weight:600;transition:.15s;
+}
+.cn-item:hover{border-color:var(--blue);color:var(--blue2);background:#eef5ff}
+.cn-item b{font-weight:700}
+.cn-home{background:#eef5ff;border-color:#d5e5fd}
+.cn-home:hover{border-color:var(--blue);color:var(--blue2);background:#e4efff}
 @media (max-width:560px){
   .opt{gap:8px}
   input[type=number]{width:70px}
   .hd .pc{display:none}
+  .crossnav{gap:6px;padding:10px 12px}
+  .cn-lab{width:100%}
 }
 </style>
 </head>
@@ -140,6 +158,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
     <button data-t="pdf">📄 PDF</button>
     <button data-t="xl">📊 表格</button>
   </nav>
+
+  <div class="crossnav">
+    <span class="cn-lab">需要别的？</span>
+    <a class="cn-item" href="https://lsj666nsyw.github.io/whale-tools/">🧰 24 个<b>实用小工具</b></a>
+    <a class="cn-item" href="https://lsj666nsyw.github.io/office-tools/">🏢 Word/水印/数据清洗<b>办公工具箱</b></a>
+    <a class="cn-item cn-home" href="https://lsj666nsyw.github.io/whale-home/">🐋 全部工具<b>总入口</b></a>
+  </div>
 
   <!-- ============ 图片 ============ -->
   <section id="s-img" class="on">

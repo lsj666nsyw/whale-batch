@@ -7,15 +7,29 @@
 <meta name="description" content="完全在浏览器本地处理的免费工具：图片批量改尺寸压缩水印、PDF合并拆分、Excel多表合并比对。文件不上传，手机电脑都能用。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233884f5'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle'%3E%F0%9F%90%8B%3C/text%3E%3C/svg%3E">
 <style>
-:root{
-  --blue:#3884f5; --blue2:#2463c7; --ink:#1a2233; --ink2:#55617a; --ink3:#8b95a8;
-  --line:#e3e8f0; --bg:#f5f7fb; --card:#fff; --r:14px;
-}
+/* 设计原则：单色系、无渐变、无装饰图形、排版建立层级。
+   去掉 AI 味的渐变、emoji、徽章、彩色卡片。 */
+:root{--ink:#1a1a1a;
+  --ink2:#555;
+  --ink3:#999;
+  --line:#e8e8e8;
+  --bg:#fafafa;
+  --card:#fff;
+  --accent:#2b5cff;
+  --accent-dim:#f0f4ff;
+  --radius:4px; --blue:#2b5cff;--blue2:#1a45b3;--purple:#2b5cff;--r:4px;--p:#2b5cff;--p2:#1a45b3}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+
+
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei UI",sans-serif;
-  background:var(--bg);color:var(--ink);line-height:1.6;
+  background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px;
   padding-bottom:env(safe-area-inset-bottom);
 }
 .wrap{max-width:860px;margin:0 auto;padding:0 14px}
@@ -24,32 +38,31 @@ header{
   backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
 }
 .hd{display:flex;align-items:center;gap:10px;height:54px}
-.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#4a90ff,#7c5ce0);
+.logo{width:30px;height:30px;border-radius:9px;background:var(--accent);
   display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
 .hd b{font-size:16px}
-.hd .tag{font-size:10.5px;color:#fff;background:var(--blue);padding:2px 8px;border-radius:999px;font-weight:600}
+.hd .tag{font-size:10.5px;color:#fff;background:var(--blue);padding:2px 8px;border-radius:var(--radius);font-weight:600}
 .hd .pc{margin-left:auto;font-size:12px;color:var(--ink3)}
 
 /* 选项卡 */
 nav{display:flex;gap:8px;padding:12px 0 4px;overflow-x:auto}
 nav button{
-  flex:none;padding:9px 18px;border-radius:999px;border:1px solid var(--line);
+  flex:none;padding:9px 18px;border-radius:var(--radius);border:1px solid var(--line);
   background:#fff;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer;
 }
-nav button.on{background:linear-gradient(135deg,#4a90ff,#2463c7);color:#fff;border-color:transparent;
-  box-shadow:0 4px 14px rgba(56,132,245,.3)}
+nav button.on{background:var(--accent);color:#fff;border-color:transparent;
+  box-shadow:none}
 section{display:none;padding:10px 0 30px}
 section.on{display:block}
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px}
 .card h3{font-size:14.5px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
-.card h3 .n{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;
-  display:inline-flex;align-items:center;justify-content:center;flex:none}
+.card h3 .n{display:none}
 .hint{font-size:12.5px;color:var(--ink3);margin-bottom:10px}
 
 /* 文件区 */
 .drop{
-  border:2px dashed #c9d6ee;border-radius:12px;padding:26px 14px;text-align:center;
+  border:2px dashed #c9d6ee;border-radius:var(--radius);padding:26px 14px;text-align:center;
   color:var(--ink2);font-size:14px;cursor:pointer;transition:.15s;background:#fafcff;
 }
 .drop:active,.drop.over{border-color:var(--blue);background:#eef5ff}
@@ -80,12 +93,12 @@ input[type=range]{width:130px;accent-color:var(--blue)}
 
 /* 执行 */
 .go{
-  width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;
-  background:linear-gradient(135deg,#4a90ff,#2463c7);box-shadow:0 6px 18px rgba(56,132,245,.35);
+  width:100%;padding:14px;border:none;border-radius:var(--radius);font-size:16px;font-weight:700;color:#fff;cursor:pointer;
+  background:var(--accent);box-shadow:none;
 }
 .go:disabled{opacity:.5;cursor:default}
 .prog{height:6px;background:#e8edf6;border-radius:4px;overflow:hidden;margin-top:10px;display:none}
-.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4a90ff,#7c5ce0);transition:width .2s}
+.prog i{display:block;height:100%;width:0;background:var(--card);transition:width .2s}
 .log{font-size:12.5px;color:var(--ink2);margin-top:10px;max-height:120px;overflow-y:auto;font-family:ui-monospace,Consolas,monospace}
 .log div{padding:1px 0}
 .log .err{color:#c04040}
@@ -101,7 +114,7 @@ input[type=range]{width:130px;accent-color:var(--blue)}
   padding:5px 13px;border-radius:7px;font-weight:600}
 .res .row a.dl2{background:#2fa360}
 .bigdl{display:block;text-align:center;background:#2fa360;color:#fff;text-decoration:none;
-  padding:12px;border-radius:11px;font-weight:700;font-size:15px;margin-top:10px}
+  padding:12px;border-radius:var(--radius);font-weight:700;font-size:15px;margin-top:10px}
 
 /* 预览 */
 .pv{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:8px}
@@ -112,8 +125,8 @@ input[type=range]{width:130px;accent-color:var(--blue)}
 footer{border-top:1px solid var(--line);background:#fff;padding:22px 0 34px;margin-top:10px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--ink3)}
 .badges{display:flex;gap:8px;flex-wrap:wrap}
-.badge{background:#eef5ff;color:var(--blue2);border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:600}
-.promo{background:linear-gradient(135deg,#eef5ff,#f3efff);border:1px solid #d9e6ff;border-radius:var(--r);
+.badge{background:none;color:var(--ink2);padding:0;font-size:12px;font-weight:500}
+.promo{background:var(--accent);border:1px solid #d9e6ff;border-radius:var(--r);
   padding:14px 16px;margin-bottom:14px;font-size:13px;color:var(--ink2)}
 .promo b{color:var(--ink)}
 /* 跨站导流 */
@@ -126,7 +139,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 .cn-item{
   display:inline-flex;align-items:center;gap:5px;text-decoration:none;
   font-size:12.5px;color:var(--ink2);background:#f4f7fc;border:1px solid #e3e8f0;
-  border-radius:999px;padding:5px 12px;font-weight:600;transition:.15s;
+  border-radius:var(--radius);padding:5px 12px;font-weight:600;transition:.15s;
 }
 .cn-item:hover{border-color:var(--blue);color:var(--blue2);background:#eef5ff}
 .cn-item b{font-weight:700}
@@ -139,13 +152,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
   .crossnav{gap:6px;padding:10px 12px}
   .cn-lab{width:100%}
 }
+
+/* ---------- 页脚 ---------- */
+.footer{border-top:1px solid var(--line);background:#fff;padding:24px 0 32px;margin-top:48px}
+.fnav{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13px}
+.fnav a{color:var(--ink2);text-decoration:none;font-weight:500}
+.fnav a:hover{color:var(--accent)}
+.copy{font-size:12px;color:var(--ink3)}
+
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap hd">
-    <div class="logo">🐋</div>
+    <div class="logo"><svg viewBox="0 0 32 32" fill="none" style="width:100%;height:100%"><circle cx="16" cy="16" r="14" fill="#1a1a1a"/><path d="M6 16c0-4.4 4-8 10-8s10 3.6 10 8-4 8-10 8-10-3.6-10-8z" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="13" r="1" fill="#fff"/></svg></div>
     <b>鲸鱼工具箱</b>
     <span class="tag">免费</span>
     <span class="pc">本地处理 · 文件不上传</span>
@@ -154,9 +175,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 
 <main class="wrap">
   <nav>
-    <button class="on" data-t="img">🖼 图片</button>
-    <button data-t="pdf">📄 PDF</button>
-    <button data-t="xl">📊 表格</button>
+    <button class="on" data-t="img">图片</button>
+    <button data-t="pdf">PDF</button>
+    <button data-t="xl">表格</button>
   </nav>
 
   <div class="crossnav">
@@ -168,7 +189,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 
   <!-- ============ 图片 ============ -->
   <section id="s-img" class="on">
-    <div class="promo">🔒 所有处理都在<b>你这台设备的浏览器里</b>完成，文件不会发送到任何服务器，断网也能用。</div>
+    <div class="promo">所有处理都在<b>你的浏览器里</b>完成，文件不发送到任何服务器，断网可用。</div>
     <div class="card">
       <h3><span class="n">1</span>选择图片</h3>
       <div class="drop" id="img-drop">点我选择图片（可多选）<small>支持 JPG / PNG / WebP / BMP / TIFF</small></div>
@@ -238,7 +259,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 
   <!-- ============ PDF ============ -->
   <section id="s-pdf">
-    <div class="promo">📑 合并多个 PDF、按页拆分、提取指定页。全程本地，<b>合同标书等敏感文件也放心</b>。</div>
+    <div class="promo">合并多个 PDF、按页拆分、提取指定页。全程本地，<b>合同标书等敏感文件也放心</b>。</div>
     <div class="card">
       <h3><span class="n">1</span>选择 PDF</h3>
       <div class="drop" id="pdf-drop">点我选择 PDF 文件（可多选）<small>合并按列表顺序；拆分用第一个文件</small></div>
@@ -266,7 +287,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 
   <!-- ============ 表格 ============ -->
   <section id="s-xl">
-    <div class="promo">🧮 多个 Excel 合并成总表、按列拆分、两表对账比对。支持 .xlsx / .xls / .csv。</div>
+    <div class="promo">多个 Excel 合并成总表、按列拆分、两表对账比对。支持 .xlsx / .xls / .csv。</div>
     <div class="card">
       <h3><span class="n">1</span>选择表格</h3>
       <div class="drop" id="xl-drop">点我选择表格文件（可多选）<small>xlsx / xls / csv；合并按列表顺序</small></div>
@@ -295,8 +316,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-con
 <footer>
   <div class="wrap">
     <div class="badges">
-      <span class="badge">✓ 不上传</span><span class="badge">✓ 不用注册</span>
-      <span class="badge">✓ 手机可用</span><span class="badge">✓ 断网可用</span>
+      <span class="badge">不上传</span><span class="badge">不用注册</span>
+      <span class="badge">手机可用</span><span class="badge">断网可用</span>
     </div>
     <div>需要批量文件夹处理？<b>桌面版</b>（图片/PDF/表格三件套）一次买断 → 联系作者</div>
   </div>
